@@ -7,5 +7,10 @@ const connection = mysql.createConnection({
     database: "hospital"
 })
 
+connection.connect((err) => {
+    if (err) throw err;
+
+    console.log("Connected to db");
+})
 
 module.exports = connection;

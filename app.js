@@ -6,11 +6,13 @@ const patientRoutes = require('./routes/patientmodel');
 
 
 
+
+
 app.listen(port, () => {
     console.log("Priyanshu should die");
 });
 
 
 
-
+app.use(express.json());
 app.use('/patients',patientRoutes)
