@@ -5,4 +5,4 @@ const router = express.Router();
 
 router.get('/', patientController.get_patients);
 
-module.exports = router;
+module.exports = router; 

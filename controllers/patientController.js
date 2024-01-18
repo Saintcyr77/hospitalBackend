@@ -1,11 +1,4 @@
-
-const mysql = require('mysql2');
-const connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "root",
-    database: "hosdummy"
-})
+const connection = require('../model/slqConnection')
 const get_patients = async (req, res) => {
     try {
         const data = await connection.promise().query(
