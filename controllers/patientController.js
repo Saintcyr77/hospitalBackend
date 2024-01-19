@@ -14,6 +14,7 @@ const get_patients = async (req, res) => {
 };
 
 const post_patients = async (req, res) => {
+
   try {
     const {
       first_name,
@@ -23,17 +24,16 @@ const post_patients = async (req, res) => {
       email,
       address,
     } = req.body;
-
+    let dateTime = new Date();
     const [{ insertId }] = await connection.promise().query(
-      `insert into patients (first_name, last_name, doctor_id, phone_no, email, address)
-            values (?,?,?,?,?,?)
+      `insert into patients (first_name, last_name, doctor_id, phone_no, email, address,created_at,created_time)
+            values (?,?,?,?,?,?,?,CURRENT_TIMESTAMP)
             `,
-      [first_name, last_name, doctor_id, phone_no, email, address]
+      [first_name, last_name, doctor_id, phone_no, email, address,dateTime]
     );
-
+    console.log(`insert id is ${insertId}`);
     res.status(202).json({
       message: "Patient Registered",
-      insertId: insertId,
     });
   } catch (err) {
     res.status(500).json({
