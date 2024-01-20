@@ -48,6 +48,11 @@ const get_doctor_by_id = async (req, res) => {
     const data = await connection
       .promise()
       .query(`select * from doctors where doctor_id=?`, [id]);
+    if (data[0][0].affectedRows === 0) {
+      res.status(404).json({
+        message: "Doctor not found",
+      });
+    }
     res.status(202).json({
       message: data[0][0],
     });
@@ -69,7 +74,7 @@ const delete_doctor = async (req, res) => {
     `,
       [id]
     );
-    console.log("Got here");
+
     res.status(200).json({
       message: "Successfully deleted",
     });
