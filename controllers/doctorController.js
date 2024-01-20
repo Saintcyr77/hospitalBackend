@@ -61,21 +61,20 @@ const get_doctor_by_id = async (req, res) => {
 const delete_doctor = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(id);
 
     await connection.promise().query(
       `
-    delete from doctors where doctor_id=?
+    DELETE from doctors where doctor_id=?
     `,
       [id]
     );
-
+    console.log("Got here");
     res.status(200).json({
       message: "Successfully deleted",
     });
 
-    res.status(200).json({
-      message: "Succesfully Deleted",
-    });
+    res.session.destroy();
   } catch (err) {
     res.status(500).json({
       message: "Failed to Delete Doctor",

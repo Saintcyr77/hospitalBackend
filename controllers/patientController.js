@@ -14,7 +14,6 @@ const get_patients = async (req, res) => {
 };
 
 const post_patients = async (req, res) => {
-
   try {
     const {
       first_name,
@@ -29,7 +28,7 @@ const post_patients = async (req, res) => {
       `insert into patients (first_name, last_name, doctor_id, phone_no, email, address,created_at,created_time)
             values (?,?,?,?,?,?,?,CURRENT_TIMESTAMP)
             `,
-      [first_name, last_name, doctor_id, phone_no, email, address,dateTime]
+      [first_name, last_name, doctor_id, phone_no, email, address, dateTime]
     );
     console.log(`insert id is ${insertId}`);
     res.status(202).json({
@@ -119,6 +118,7 @@ const delete_patient = async (req, res) => {
     res.status(202).json({
       message: "Deleted patient record",
     });
+    res.session.destroy();
   } catch (err) {
     res.status(500).json({
       message: "Terminated",
