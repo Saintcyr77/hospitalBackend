@@ -2,9 +2,15 @@ const connection = require("../model/slqConnection");
 
 const ger_all_rooms = async (req, res) => {
   try {
-    const data = await connection.promise().query(`
-        select * from rooms
-        `);
+    const { page, limit } = req.query;
+
+    const offset = (page - 1) * limit;
+    const data = await connection.promise().query(
+      `
+        select * from rooms limit ? offset ?
+        `,
+      [+limit, +offset]
+    );
 
     res.status(202).json({
       message: data[0],

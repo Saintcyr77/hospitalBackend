@@ -2,7 +2,13 @@ const { json } = require("express");
 const connection = require("../model/slqConnection");
 const get_patients = async (req, res) => {
   try {
-    const data = await connection.promise().query(`Select * from patients`);
+    const { page, limit } = req.query;
+
+    const offset = (page - 1) * limit;
+    console.log(page, limit);
+    const data = await connection
+      .promise()
+      .query(`Select * from patients limit ? offset ?`, [+limit, +offset]);
     res.status(202).json({
       patients: data[0],
     });

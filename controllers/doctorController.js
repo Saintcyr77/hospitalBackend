@@ -2,7 +2,12 @@ const connection = require("../model/slqConnection");
 
 const get_all_doctors = async (req, res) => {
   try {
-    const data = await connection.promise().query(`select * from doctors`);
+    const { page, limit } = req.query;
+
+    const offset = (page - 1) * limit;
+    const data = await connection
+      .promise()
+      .query(`select * from doctors limit ? offset ?`, [+limit, +offset]);
     res.status(202).json({
       message: data[0],
     });
